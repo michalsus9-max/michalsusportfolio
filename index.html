@@ -159,7 +159,7 @@ button:active{border-color:#404040 #fff #fff #404040}
 /* ===== EDYTUJ TUTAJ ===== */
 const NAME="Michał Sus";
 const ROLE="montażysta · filmoznawca · filmowiec"; // widoczne na pulpicie i na showreelu
-const PHONE="693536889"; // numer telefonu (folder "O mnie")
+const PHONE="693536889";
 const PHONE_TXT="693 536 889";
 const EMAIL="michalsus9@gmail.com"; // przycisk "Kontakt" na pasku zadań i podpis na pulpicie
 const AVAILABLE="Dostępny do nowych projektów · Trójmiasto i zdalnie"; // pusty tekst "" = ukryte
@@ -393,6 +393,7 @@ sh.scale.setScalar(1-.3*h/1.2);sh.material.opacity=.3*(1-.5*h/1.2)},PIXEL);
 arw=scene3D(arr,44,60,35,4.4,()=>{const g=new THREE.Group(),m=new THREE.MeshStandardMaterial({color:0xee2222,roughness:.35,metalness:.2});
 const a=new THREE.Mesh(new THREE.BoxGeometry(.55,1.1,.4),m);a.position.y=-.5;const h=new THREE.Mesh(new THREE.ConeGeometry(.85,.95,4),m);h.rotation.y=Math.PI/4;h.position.y=.5;g.add(a,h);g.rotation.x=.2;return g},(g,t)=>{g.rotation.y=t/600})}
 (function loop(t){requestAnimationFrame(loop);if(mas.style.display=="flex"){dog&&dog(t);arw&&arw(t)}})(0);
+(function(){const sc=document.createElement("script");sc.src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js";sc.async=true;sc.onload=init3D;sc.onerror=()=>mas.classList.add("fallback");document.head.appendChild(sc)})();
 // buźkę można przeciągać; nie rusza się, dopóki w nią nie klikniesz
 const dc=$("#dogc");mas.addEventListener("click",()=>{if(mas.classList.contains("fallback")&&resting&&!REDUCED){bt0=performance.now();turnNow=TURN_CLICK_DEG}});dc.title="Kliknij mnie, a podskoczę. Możesz mnie też przeciągnąć";dc.style.touchAction="none";let dr=null;
 dc.onpointerdown=e=>{dc.setPointerCapture(e.pointerId);dr={x:e.clientX,y:e.clientY,l:mas.offsetLeft,t:mas.offsetTop,m:false}};
@@ -412,6 +413,15 @@ function hideMas(){mas.style.display=arr.style.display=arrFallback.style.display
 function parkMascot(){mascotParked=true;arr.style.display=arrFallback.style.display="none";mas.classList.add("stack");mas.style.left="auto";mas.style.top="auto";mas.style.right="10px";mas.style.bottom="calc(40px + env(safe-area-inset-bottom,0px))";mas.style.display="flex";bub.style.display="block";bub.textContent="Miłego oglądania!";setTimeout(()=>{if(!guideWaiting)bub.style.display="none"},3600)}
 function finishGuide(){guideWaiting=false;document.querySelectorAll(".ic.hint").forEach(i=>i.classList.remove("hint"));parkMascot()}
 
+// powitanie
+function welcome(){
+const d=document.createElement("div");d.className="win dlg raised";d.setAttribute("role","dialog");
+d.innerHTML="<div class='th'><span>ℹ️ Witaj!</span><button class='raised cl' aria-label='Zamknij'>✕</button></div><div class='wb' style='display:flex;gap:12px;align-items:flex-start;padding:14px'><span style='font-size:34px'>👋</span><div><b>"+esc(GREETING)+"</b><p style='margin:6px 0 12px'>Żeby zobaczyć moje realizacje, kliknij tutaj. Foldery na pulpicie otwierasz dwukrotnym kliknięciem (na telefonie – jednym).</p><button class='raised go'><b>Kliknij tutaj</b></button></div></div>";
+document.body.appendChild(d);const pg=()=>{if(d.isConnected&&guideWaiting===false)point(d,"Kliknij przycisk w okienku")};pg();setTimeout(pg,560);setTimeout(pg,1200);d.addEventListener("animationend",pg);
+// przycisk przechodzi do wskazówki; folder otwiera dopiero użytkownik
+const next=()=>{d.remove();guideWaiting=true;const i=document.querySelector(".ic[data-id='"+FIRST_OPEN+"']")||document.querySelector(".ic");i.classList.add("hint");point(i,matchMedia("(any-pointer:coarse)").matches?"Teraz stuknij folder, aby zobaczyć realizacje!":"Teraz kliknij dwa razy folder, aby zobaczyć realizacje!",true)};
+d.querySelector(".cl").onclick=next;d.querySelector(".go").onclick=next}
+
 // pulpit
 const desk=$("#desk");
 F.filter(f=>!f.play).forEach(f=>{const e=document.createElement("div");e.className="ic";e.dataset.id=f.id;e.tabIndex=0;e.setAttribute("role","button");e.setAttribute("aria-label","Otwórz folder: "+f.name);
@@ -424,6 +434,7 @@ e.ondblclick=()=>openW(f);desk.appendChild(e)});
 
 // menu start
 const m=$("#menu");F.filter(f=>!f.play||hasReel()).forEach(f=>{const r=document.createElement("div");r.innerHTML=ico(f,20)+esc(f.name);r.onclick=()=>{m.style.display="none";openW(f)};m.appendChild(r)});
+const off=document.createElement("div");off.innerHTML="ℹ️ Pokaż poradnik";off.onclick=()=>{m.style.display="none";welcome()};m.appendChild(off);
 $("#start").innerHTML="<b>"+esc(START_ICON)+" Start</b>";
 $("#start").onclick=e=>{e.stopPropagation();m.style.display=m.style.display=="block"?"none":"block"};
 document.addEventListener("click",()=>m.style.display="none");
@@ -447,6 +458,6 @@ if(!PHOTO_CLOUDS){w.classList.add("still");w.querySelectorAll(".cld").forEach(e=
 if(document.readyState=="complete")setupWallpaper();else addEventListener("load",setupWallpaper);
 
 // start: link do konkretnej pracy (#tele/arkada-alkoflow) pomija intro
-openFromHash();
+openFromHash();welcome();
 </script>
 </body></html>
