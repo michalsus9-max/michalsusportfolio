@@ -31,6 +31,8 @@ button:active{border-color:#404040 #fff #fff #404040}
 .cld.b{--w:1800px;opacity:.55;transform:scale(-1,1.15);animation-duration:calc(var(--cs,50s)*2.5);animation-direction:reverse}
 .ph{position:absolute;top:0;bottom:0;left:-8%;right:-8%;background-position:center;background-size:cover}
 .ph.sk{animation:sk var(--cs,50s) ease-in-out infinite alternate}
+.photo .ph.sk::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 28%,rgba(255,255,190,.22) 48%,transparent 68%);background-size:260% 100%;-webkit-mask-image:linear-gradient(transparent 54%,#000 76%);mask-image:linear-gradient(transparent 54%,#000 76%);mix-blend-mode:screen;animation:grassglow 18s ease-in-out infinite alternate;pointer-events:none}
+@keyframes grassglow{from{background-position:100% 0;opacity:.35}to{background-position:0 0;opacity:.8}}
 .ph.wd{background-image:linear-gradient(105deg,transparent 28%,rgba(0,50,0,.5) 38%,transparent 48%),linear-gradient(105deg,transparent 40%,rgba(255,255,210,.7) 50%,transparent 60%);background-size:300% 100%;background-position:80% 0;mix-blend-mode:soft-light;opacity:.8;animation:wd 12s ease-in-out infinite}
 .ph.wd.b{background-image:linear-gradient(98deg,transparent 40%,rgba(255,255,220,.55) 50%,transparent 60%);animation-delay:-6s;opacity:.6}
 @keyframes wd{0%{background-position:80% 0}60%{background-position:20% 0}100%{background-position:20% 0}}
@@ -40,7 +42,7 @@ button:active{border-color:#404040 #fff #fff #404040}
 #wp.still .sk{animation:none}
 /* tapeta zatrzymuje się, gdy gra film albo karta jest w tle (oszczędza baterię i płynność) */
 #wp.pause *{animation-play-state:paused!important}
-@keyframes sk{from{transform:translateX(-6.5%)}to{transform:translateX(6.5%)}}
+@keyframes sk{from{transform:scale(1.03) translateX(-1.2%)}to{transform:scale(1.06) translateX(1.2%)}}
 @keyframes dr{to{background-position:calc(-1*var(--w)) 0}}
 #reel{position:fixed;inset:0;background:#000;z-index:9999;display:flex;align-items:center;justify-content:center;color:#fff;font-family:"Courier New",monospace;text-align:center;transition:opacity .3s}
 #reel h2{font-size:clamp(28px,8vw,80px);margin:0;letter-spacing:.08em;animation:fl .9s steps(2) infinite}
@@ -49,13 +51,15 @@ button:active{border-color:#404040 #fff #fff #404040}
 #bar{position:absolute;left:0;bottom:0;height:4px;background:#0f0;width:0;transition:width .3s}
 @keyframes fl{50%{opacity:.75;transform:translateX(2px)}}
 @keyframes bn{50%{transform:translateY(-7px)}}
-#desk{position:fixed;inset:0 0 calc(30px + env(safe-area-inset-bottom,0px)) 0;display:flex;flex-direction:column;flex-wrap:wrap;align-content:flex-start;gap:6px;padding:12px 12px 12px 2px;z-index:1}
-.ic{width:88px;text-align:center;color:#fff;cursor:pointer;padding:4px}
+#desk{position:fixed;inset:0 0 calc(30px + env(safe-area-inset-bottom,0px)) 0;display:flex;flex-direction:column;flex-wrap:nowrap;align-content:flex-start;justify-content:space-evenly;gap:0;padding:8px 10px;z-index:1}
+.ic{width:116px;min-height:0;flex:1 1 0;display:flex;flex-direction:column;justify-content:center;text-align:center;color:#fff;cursor:pointer;padding:3px 6px}
 .ic svg{display:block;margin:0 auto 2px;filter:drop-shadow(1px 2px 0 rgba(0,0,0,.45))}
 .ic span{display:inline-block;padding:0 3px;font-size:12px;text-shadow:1px 1px #000}
 .ic.sel span,.ic:focus-visible span{background:#000080;outline:1px dotted #ff0}
 .ic:focus{outline:none}
 .ic.hint svg{animation:bn .8s ease-in-out infinite}
+@media(max-height:650px){.ic svg{width:54px;height:54px}.ic span{font-size:11px;line-height:1.15}}
+@media(max-height:540px){.ic svg{width:44px;height:44px}}
 #tb{position:fixed;left:0;right:0;bottom:0;padding:2px 3px calc(2px + env(safe-area-inset-bottom,0px));height:calc(30px + env(safe-area-inset-bottom,0px));display:flex;gap:4px;align-items:center;z-index:900}
 #tb .tasks{flex:1;display:flex;gap:3px;overflow:hidden}
 #tb .tasks button,#start{display:flex;align-items:center;gap:4px;max-width:150px;white-space:nowrap;padding:3px 8px;font-size:12px}
@@ -63,6 +67,8 @@ button:active{border-color:#404040 #fff #fff #404040}
 #menu{position:fixed;left:3px;bottom:calc(32px + env(safe-area-inset-bottom,0px));width:220px;z-index:950;display:none;padding:3px}
 #menu div{padding:6px 10px;cursor:pointer;display:flex;gap:8px;align-items:center}#menu div:hover{background:#000080;color:#fff}
 .win{position:absolute;width:480px;max-width:100%;z-index:10;padding:2px;box-shadow:2px 2px 0 #000}
+.folder-window{display:flex;flex-direction:column;min-width:240px;min-height:180px;max-width:calc(100vw - 8px);max-height:calc(100vh - 42px);resize:both;overflow:hidden}
+.folder-window .wb{flex:1;min-height:0;max-height:none}
 .th{background:linear-gradient(90deg,#000080,#1084d0);color:#fff;font-weight:700;padding:3px 4px;display:flex;justify-content:space-between;align-items:center;cursor:move;touch-action:none}
 .th span:first-child{display:flex;gap:6px;align-items:center}
 .th button{padding:0 6px;min-width:18px;height:16px;line-height:12px;font-size:11px;font-weight:700;margin-left:2px}
@@ -75,6 +81,8 @@ button:active{border-color:#404040 #fff #fff #404040}
 #mas{position:fixed;z-index:5000;display:none;align-items:flex-end;gap:4px;pointer-events:none;max-width:calc(100vw - 16px)}
 #mas .bub{background:#ffffe1;border:1px solid #000;padding:6px 8px;max-width:190px;font-size:12px;box-shadow:2px 2px 0 rgba(0,0,0,.4);margin-bottom:30px;position:relative}
 #dogc{pointer-events:auto;cursor:grab}
+#mas.fallback #dogc{display:none}
+#mas.fallback::before{pointer-events:auto;content:"🙂";font:82px/1 Arial,sans-serif;display:block;cursor:pointer;filter:drop-shadow(2px 4px 2px #333);animation:bn .8s ease-in-out infinite}
 #mas.stack{flex-direction:column-reverse;align-items:center;gap:2px}
 #mas.stack .bub{max-width:130px;margin-bottom:12px}
 #mas .bub::before,#mas .bub::after{content:"";position:absolute;border:8px solid transparent}
@@ -85,7 +93,8 @@ button:active{border-color:#404040 #fff #fff #404040}
 #arr.side{animation:bnx .7s ease-in-out infinite}
 @keyframes bnx{0%,100%{transform:rotate(var(--rot)) translateY(0)}50%{transform:rotate(var(--rot)) translateY(-7px)}}
 #arr{position:fixed;z-index:5000;display:none;pointer-events:none;animation:bn .7s ease-in-out infinite}
-@media(max-width:600px){.win:not(.dlg):not(.vwin){left:4px!important;width:calc(100% - 8px)!important;top:8px!important}}
+#arr-fallback{position:fixed;z-index:5001;display:none;pointer-events:none;color:#e22;font:bold 38px/1 Arial,sans-serif;text-shadow:1px 2px #fff;animation:bn .7s ease-in-out infinite}
+@media(max-width:600px){.win:not(.dlg):not(.vwin):not(.folder-window){left:4px!important;width:calc(100% - 8px)!important;top:8px!important}}
 #rv{position:absolute;inset:0}
 #rv iframe,#rv video{width:100%;height:100%;border:0;object-fit:cover;background:#000}
 #rc{position:relative;z-index:1}
@@ -156,6 +165,7 @@ button:active{border-color:#404040 #fff #fff #404040}
 <div id="menu" class="raised"></div>
 <div id="tb" class="raised"><button id="start" class="raised"><b>🎬 Start</b></button><div class="tasks" id="tasks"></div><a id="mail" class="raised">✉ Kontakt</a><button id="lst" class="raised">☰ Lista prac</button><div id="clock"></div></div>
 <canvas id="arr"></canvas>
+<div id="arr-fallback" aria-hidden="true">⬆</div>
 <div id="mas"><canvas id="dogc"></canvas><div class="bub"></div></div>
 
 
@@ -176,10 +186,10 @@ const SHOWREEL=""; // link YouTube/Vimeo albo plik .mp4 (np. "showreel.mp4"); pu
 const SHOWREEL_SECONDS=20; // po ilu sekundach showreel sam przechodzi dalej (YouTube/Vimeo)
 const REEL_CARD_MS=700; // czas jednej karty napisów, gdy nie ma showreelu (ms)
 const INTRO_ONCE=true; // wstęp tylko przy pierwszej wizycie; false = za każdym razem
-const FIRST_OPEN="tele"; // folder otwierany przyciskiem "Kliknij tutaj" w okienku powitalnym
+const FIRST_OPEN="fab"; // pierwszy folder u góry pulpitu, wskazywany w drugim kroku poradnika
 // TAPETA: najlepiej własne zdjęcie (np. kadr z Twojego filmu). Wgraj plik obok index.html i wpisz jego nazwę.
 // Puste WALLPAPER = pagórek z chmurami z plików BLISS_SRC + BLISSSKY_SRC. Jeśli ich nie ma, strona pokaże zielone wzgórza narysowane w kodzie.
-const WALLPAPER="";
+const WALLPAPER="tapeta.png";
 const BLISS_SRC="bliss.jpg"; // zdjęcie wzgórza (można też wkleić "data:image/jpeg;base64,...")
 const BLISSSKY_SRC="bliss-sky.jpg"; // samo niebo; puste "" = użyty będzie tylko pierwszy plik
 const BOUNCE_MS=1100; // czas jednego odbicia buźki w ms (większa liczba = wolniej)
@@ -206,7 +216,6 @@ const FILMY=[
 ["Teledyski","ARKADA – ALKOFLOW","Teledysk","https://youtu.be/SKKHEv-iCxg?si=2_gZhdThUkijEWlV","",""],
 ["Filmy fabularne","STEMPEL (2023)","reż. Michał Sus","https://youtu.be/pchSmtxlBWU?si=vokgHNuclh-Am83Q","",""],
 ["Filmy fabularne","Początek końca światła (2023)","reż. Michał Sus, Maria Sukow","https://youtu.be/E_fmcipqARU","",""],
-["Filmy fabularne","Hemopoeza – trailer","Trailer","https://youtu.be/BK682pFCPTk","",""],
 ["Filmy fabularne","La_Fortune","Film","https://youtu.be/uY0LdFzbTbc","",""],
 ["Filmy fabularne","Protowolontariusz","Film","https://www.youtube.com/watch?v=13dMotgu5sc","",""],
 ["Filmy fabularne","Kawka relacji: Gdańsk – Kraków","Film fabularny","https://youtu.be/k51J499YhHo","",""],
@@ -224,6 +233,7 @@ const FILMY=[
 ["YouTube","Marcello Mastroianni – najpiękniejszy Włoch","Film na YouTube","https://youtu.be/2mIuAcEiD0s?si=Ls8peNR-nMRAeHBF","",""],
 ["YouTube","Bar u sąsiada","Film na YouTube","https://www.youtube.com/watch?v=ksDDSvOcZjw","",""],
 ["YouTube","Bez stresu 2026","Film na YouTube","https://www.youtube.com/watch?v=gBanXSlYEXU","",""],
+["YouTube","Hemopoeza – trailer","Trailer","https://youtu.be/BK682pFCPTk","",""],
 ["Teledyski","mvrceli – fifa 2002","Teledysk","https://www.youtube.com/watch?v=ETqvUJr5ZIk","",""]
 ];
 // ===== PRODUKCJE, PRZY KTÓRYCH PRACOWAŁEM – pokazują się tylko w "Liście prac" =====
@@ -237,7 +247,7 @@ const esc=s=>String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").rep
 const hid=s=>{s=String(s);let h=5381;for(let i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))|0;return(h>>>0).toString(36)};
 const slug=s=>String(s).toLowerCase().replace(/ł/g,"l").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");
 const REDUCED=matchMedia("(prefers-reduced-motion:reduce)").matches;
-let z=20,n=0;
+let z=20,n=0,guideWaiting=false,mascotParked=false;
 
 // Ikony retro (pixel-art): c = kolory folderu [tył, front, jasna krawędź, cień], g = symbol z listy GLYPHS poniżej
 const ABOUT="<p>Cześć! Jestem "+esc(NAME)+" – filmoznawcą i filmowcem. Montuję filmy fabularne, teledyski, podcasty i shorty. Animuję oraz realizuję wydarzenia kulturalne i materiały promocyjne.</p>"
@@ -358,26 +368,27 @@ document.addEventListener("click",e=>{
 const p=e.target.closest&&e.target.closest("[data-play]");if(p){e.preventDefault();const r=p.closest(".row");if(r)openPlayer(r.dataset.t,r.dataset.u,F.find(x=>x.id==String(r.dataset.f).split("-")[0]),r.dataset.th||"")}});
 
 // okna folderów
-function openW(f){hideMas();
+function openW(f){if(!mascotParked||guideWaiting)hideMas();
 if(f.play){if(!hasReel())return;return openPlayer(f.name,SHOWREEL,f)}
-const ex=document.getElementById("w-"+f.id);if(ex){ex.style.display="block";front(ex);updateMotion();if(F.includes(f))setHash(f.id);return}
+const ex=document.getElementById("w-"+f.id);if(ex){ex.style.display="block";front(ex);updateMotion();if(F.includes(f))setHash(f.id);if(F.includes(f)&&guideWaiting)finishGuide();return}
 const body=f.html||f.items.map((i,k)=>i.sub?"<div class='row sub' data-k='"+k+"' style='cursor:pointer'><span style='font-size:30px;line-height:1'>📁</span><div><b>"+esc(i.t)+"</b><p>"+esc(i.d||"")+"</p><span style='color:#00f'>Otwórz folder ►</span></div></div>":"<div class='row' data-u='"+esc(i.u||"")+"' data-t='"+esc(i.t)+"' data-th='"+esc(i.th||"")+"' data-f='"+esc(f.id)+"'>"+thumbHtml(i)+"<div><b>"+esc(i.t)+"</b><p>"+esc(i.d||"")+"</p>"+(i.r?"<p class='rl'>Rola: "+esc(i.r)+"</p>":"")+(i.u&&i.u!="#"?(embedOf(i.u)?"<a href='#' class='go2' data-play>▶ Oglądaj tutaj</a>":"<a class='go2' href='"+esc(i.u)+"' target='_blank' rel='noopener'>Otwórz ►</a>"):"<span style='color:#888'>(link wkrótce)</span>")+"</div></div>").join("");
-const w=makeWindow({id:"w-"+f.id,title:f.name,f,body:"<div class='wb sunken'>"+body+"</div>"});
-w.style.left=(190+n*26)+"px";w.style.top=(40+n*26)+"px";n=(n+1)%8;if(f.wide)w.style.width="min(680px,96vw)";else if(f.items)w.style.width="min(560px,96vw)";
+const w=makeWindow({id:"w-"+f.id,title:f.name,f,cls:"folder-window",body:"<div class='wb sunken'>"+body+"</div>"});
+w.style.width="min(560px,96vw)";w.style.height=Math.min(innerHeight*.62,680)+"px";
+w.style.left=Math.max(4,Math.min(innerWidth-w.offsetWidth-4,190+n*26))+"px";w.style.top=Math.max(4,Math.min(innerHeight-w.offsetHeight-34,40+n*26))+"px";n=(n+1)%8;if(f.wide)w.style.width="min(680px,96vw)";else if(f.items)w.style.width="min(560px,96vw)";
 loadVimeoThumbs(w);
 w.querySelectorAll(".sub").forEach(r=>r.onclick=()=>{const it=f.items[r.dataset.k];openW({id:f.id+"-"+r.dataset.k,name:it.t,c:f.c,g:f.g,items:it.sub})});
-if(F.includes(f))setHash(f.id);updateMotion()}
+if(F.includes(f))setHash(f.id);updateMotion();if(F.includes(f)&&guideWaiting)finishGuide()}
 
 // maskotka 3D (three.js) + strzałka 3D
-const mas=$("#mas"),arr=$("#arr"),bub=$(".bub");
+const mas=$("#mas"),arr=$("#arr"),arrFallback=$("#arr-fallback"),bub=$(".bub");
 function scene3D(cv,w,h,fov,camZ,build,tick,px){px=px||1;if(typeof THREE=="undefined")return null;
 const r=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:px==1});r.setPixelRatio(px>1?1:Math.min(devicePixelRatio,2));r.setSize(w/px,h/px,false);cv.style.width=w+"px";cv.style.height=h+"px";if(px>1)cv.style.imageRendering="pixelated";
 const sc=new THREE.Scene(),c=new THREE.PerspectiveCamera(fov,w/h,.1,50);c.position.set(0,0,camZ);
 sc.add(new THREE.AmbientLight(0xffffff,.5));const d=new THREE.DirectionalLight(0xffffff,1.25);d.position.set(4,3,3);sc.add(d);
 const g=build();sc.add(g);return t=>{tick(g,t);r.render(sc,c)}}
 let bt0=-1e9,resting=true,turnNow=TURN_DEG;
-let dog=null,arw=null;
-function init3D(){if(typeof THREE=="undefined")return;dog=scene3D($("#dogc"),110,130,35,6.4,()=>{const g=new THREE.Group(),b=new THREE.Group(),Y=new THREE.MeshStandardMaterial({color:0xffd400,roughness:.3}),D=new THREE.MeshStandardMaterial({color:0x222222,roughness:.4});
+let dog=null,arw=null;mas.classList.add("fallback");
+function init3D(){if(typeof THREE=="undefined"){mas.classList.add("fallback");return;}mas.classList.remove("fallback");dog=scene3D($("#dogc"),110,130,35,6.4,()=>{const g=new THREE.Group(),b=new THREE.Group(),Y=new THREE.MeshStandardMaterial({color:0xffd400,roughness:.3}),D=new THREE.MeshStandardMaterial({color:0x222222,roughness:.4});
 b.add(new THREE.Mesh(new THREE.SphereGeometry(1,32,24),Y));
 [-1,1].forEach(k=>{const e=new THREE.Mesh(new THREE.SphereGeometry(1,16,12),D);e.scale.set(.11,.2,.08);e.position.set(k*.35,.3,.88);b.add(e)});
 const mo=new THREE.Mesh(new THREE.TorusGeometry(.5,.07,8,24,Math.PI),D);mo.rotation.z=Math.PI;mo.position.set(0,.05,.88);b.add(mo);
@@ -393,32 +404,34 @@ sh.scale.setScalar(1-.3*h/1.2);sh.material.opacity=.3*(1-.5*h/1.2)},PIXEL);
 arw=scene3D(arr,44,60,35,4.4,()=>{const g=new THREE.Group(),m=new THREE.MeshStandardMaterial({color:0xee2222,roughness:.35,metalness:.2});
 const a=new THREE.Mesh(new THREE.BoxGeometry(.55,1.1,.4),m);a.position.y=-.5;const h=new THREE.Mesh(new THREE.ConeGeometry(.85,.95,4),m);h.rotation.y=Math.PI/4;h.position.y=.5;g.add(a,h);g.rotation.x=.2;return g},(g,t)=>{g.rotation.y=t/600})}
 (function loop(t){requestAnimationFrame(loop);if(mas.style.display=="flex"){dog&&dog(t);arw&&arw(t)}})(0);
-(function(){const sc=document.createElement("script");sc.src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js";sc.async=true;sc.onload=init3D;document.head.appendChild(sc)})();
+(function(){const sc=document.createElement("script");sc.src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js";sc.async=true;sc.onload=init3D;sc.onerror=()=>mas.classList.add("fallback");document.head.appendChild(sc)})();
 // buźkę można przeciągać; nie rusza się, dopóki w nią nie klikniesz
-const dc=$("#dogc");dc.title="Kliknij mnie, a podskoczę. Możesz mnie też przeciągnąć";dc.style.touchAction="none";let dr=null;
+const dc=$("#dogc");mas.addEventListener("click",()=>{if(mas.classList.contains("fallback")&&resting&&!REDUCED){bt0=performance.now();turnNow=TURN_CLICK_DEG}});dc.title="Kliknij mnie, a podskoczę. Możesz mnie też przeciągnąć";dc.style.touchAction="none";let dr=null;
 dc.onpointerdown=e=>{dc.setPointerCapture(e.pointerId);dr={x:e.clientX,y:e.clientY,l:mas.offsetLeft,t:mas.offsetTop,m:false}};
 dc.onpointermove=e=>{if(!dr)return;const dx=e.clientX-dr.x,dy=e.clientY-dr.y;if(Math.abs(dx)+Math.abs(dy)>5)dr.m=true;if(dr.m){mas.style.left=Math.max(0,Math.min(innerWidth-mas.offsetWidth,dr.l+dx))+"px";mas.style.top=Math.max(0,Math.min(innerHeight-mas.offsetHeight-30,dr.t+dy))+"px"}};
 dc.onpointerup=()=>{if(dr&&!dr.m&&resting&&!REDUCED){bt0=performance.now();turnNow=TURN_CLICK_DEG}dr=null};
 dc.onpointercancel=()=>{dr=null};
-function point(el,txt,sec){const r=el.getBoundingClientRect();bt0=-1e9;resting=true;turnNow=sec?TURN_CLICK_DEG:TURN_DEG;bub.textContent=txt;mas.style.display="flex";arr.style.display="block";
+function point(el,txt,sec){const r=el.getBoundingClientRect();mascotParked=false;bt0=-1e9;resting=true;turnNow=sec?TURN_CLICK_DEG:TURN_DEG;bub.textContent=txt;bub.style.display="block";mas.style.right="auto";mas.style.bottom="auto";mas.style.display="flex";arr.style.display="block";arrFallback.textContent=sec?"➜":"⬆";arrFallback.style.display=mas.classList.contains("fallback")?"block":"none";
 mas.classList.toggle("stack",!!sec);arr.classList.toggle("side",!!sec);
-if(!sec){arr.style.left=r.left+r.width/2-22+"px";arr.style.top=r.bottom+2+"px";
+if(!sec){arr.style.left=r.left+r.width/2-22+"px";arr.style.top=r.bottom+2+"px";arrFallback.style.left=arr.style.left;arrFallback.style.top=arr.style.top;
 mas.style.left=Math.min(innerWidth-mas.offsetWidth-8,Math.max(8,r.left+r.width/2-50))+"px";
 mas.style.top=Math.min(innerHeight-mas.offsetHeight-40,r.bottom+66)+"px";return}
 const cy=r.top+36,cx=r.right+38;
-arr.style.setProperty("--rot","-90deg");arr.style.left=cx-22+"px";arr.style.top=cy-30+"px";
+arr.style.setProperty("--rot","-90deg");arr.style.left=cx-22+"px";arr.style.top=cy-30+"px";arrFallback.style.left=arr.style.left;arrFallback.style.top=arr.style.top;
 mas.style.left=Math.max(4,Math.min(innerWidth-mas.offsetWidth-4,cx+36))+"px";
 mas.style.top=Math.max(8,Math.min(innerHeight-mas.offsetHeight-40,cy-mas.offsetHeight+65))+"px"}
-function hideMas(){mas.style.display=arr.style.display="none"}
+function hideMas(){mas.style.display=arr.style.display=arrFallback.style.display="none"}
+function parkMascot(){mascotParked=true;arr.style.display=arrFallback.style.display="none";mas.classList.add("stack");mas.style.left="auto";mas.style.top="auto";mas.style.right="10px";mas.style.bottom="calc(40px + env(safe-area-inset-bottom,0px))";mas.style.display="flex";bub.style.display="block";bub.textContent="Miłego oglądania!";setTimeout(()=>{if(!guideWaiting)bub.style.display="none"},3600)}
+function finishGuide(){guideWaiting=false;document.querySelectorAll(".ic.hint").forEach(i=>i.classList.remove("hint"));parkMascot()}
 
 // powitanie
-function welcome(){if(openFromHash())return;
+function welcome(){
 const d=document.createElement("div");d.className="win dlg raised";d.setAttribute("role","dialog");
 d.innerHTML="<div class='th'><span>ℹ️ Witaj!</span><button class='raised cl' aria-label='Zamknij'>✕</button></div><div class='wb' style='display:flex;gap:12px;align-items:flex-start;padding:14px'><span style='font-size:34px'>👋</span><div><b>"+esc(GREETING)+"</b><p style='margin:6px 0 12px'>Żeby zobaczyć moje realizacje, kliknij tutaj. Foldery na pulpicie otwierasz dwukrotnym kliknięciem (na telefonie – jednym).</p><button class='raised go'><b>Kliknij tutaj</b></button></div></div>";
 document.body.appendChild(d);setTimeout(()=>{if(d.isConnected)point(d.querySelector(".go"),"Kliknij ten przycisk")},520);
-// po zamknięciu okienka maskotka pokazuje ten sam folder, który otwiera przycisk "Kliknij tutaj"
-const next=()=>{d.remove();const i=document.querySelector(".ic[data-id='"+FIRST_OPEN+"']")||document.querySelector(".ic");i.classList.add("hint");point(i,matchMedia("(any-pointer:coarse)").matches?"Teraz stuknij ten folder!":"Teraz kliknij dwa razy ten folder!",true)};
-d.querySelector(".cl").onclick=next;d.querySelector(".go").onclick=()=>{d.remove();openW(F.find(x=>x.id==FIRST_OPEN)||F[1]||F[0])}}
+// przycisk przechodzi do wskazówki; folder otwiera dopiero użytkownik
+const next=()=>{d.remove();guideWaiting=true;const i=document.querySelector(".ic[data-id='"+FIRST_OPEN+"']")||document.querySelector(".ic");i.classList.add("hint");point(i,matchMedia("(any-pointer:coarse)").matches?"Teraz stuknij folder, aby zobaczyć realizacje!":"Teraz kliknij dwa razy folder, aby zobaczyć realizacje!",true)};
+d.querySelector(".cl").onclick=next;d.querySelector(".go").onclick=next}
 
 // showreel / intro
 $("#wp").style.setProperty("--cs",CLOUD_SECONDS+"s");
@@ -438,7 +451,7 @@ const T=SHOWREEL_SECONDS*1000,t0=Date.now();rt=setInterval(()=>{const q=Date.now
 // pulpit
 const desk=$("#desk");
 F.filter(f=>!f.play).forEach(f=>{const e=document.createElement("div");e.className="ic";e.dataset.id=f.id;e.tabIndex=0;e.setAttribute("role","button");e.setAttribute("aria-label","Otwórz folder: "+f.name);
-e.innerHTML=ico(f,64)+"<span>"+esc(f.name)+"</span>";
+e.innerHTML=ico(f,72)+"<span>"+esc(f.name)+"</span>";
 e.onclick=()=>{document.querySelectorAll(".ic").forEach(x=>x.classList.remove("sel","hint"));e.classList.add("sel")};
 e.onkeydown=ev=>{if(ev.key=="Enter"||ev.key==" "){ev.preventDefault();openW(f)}};
 // dotyk/rysik otwiera od razu (także na laptopie z ekranem dotykowym); mysz – dwuklik
@@ -447,7 +460,7 @@ e.ondblclick=()=>openW(f);desk.appendChild(e)});
 
 // menu start
 const m=$("#menu");F.filter(f=>!f.play||hasReel()).forEach(f=>{const r=document.createElement("div");r.innerHTML=ico(f,20)+esc(f.name);r.onclick=()=>{m.style.display="none";openW(f)};m.appendChild(r)});
-const off=document.createElement("div");off.innerHTML="⏻ Obejrzyj wstęp ponownie";off.onclick=()=>{try{localStorage.removeItem("introSeen")}catch(e){}setHash("");location.reload()};m.appendChild(off);
+const off=document.createElement("div");off.innerHTML="ℹ️ Pokaż poradnik";off.onclick=()=>{m.style.display="none";welcome()};m.appendChild(off);
 $("#start").innerHTML="<b>"+esc(START_ICON)+" Start</b>";
 $("#start").onclick=e=>{e.stopPropagation();m.style.display=m.style.display=="block"?"none":"block"};
 document.addEventListener("click",()=>m.style.display="none");
@@ -473,6 +486,6 @@ if(document.readyState=="complete")setupWallpaper();else addEventListener("load"
 // start: link do konkretnej pracy (#tele/arkada-alkoflow) pomija intro
 let seen=false;try{seen=INTRO_ONCE&&localStorage.getItem("introSeen")=="1"}catch(e){}
 if(location.hash.length>1)seen=true;
-if(seen){reel.remove();openFromHash()}else startReel();
+reel.remove();openFromHash();welcome();
 </script>
 </body></html>
