@@ -218,7 +218,7 @@ const FILMY=[
 ["Podcasty i relacje","Ludzie Filologicznego: Dekalog I","Rozmowa","https://youtu.be/lK_1EB6C-9U?si=VTXzIzI_BPWCO3Rj","",""],
 ["Podcasty i relacje","#FestiwaLOVE Kronika: dzień ósmy","Kronika","https://www.youtube.com/watch?v=JNLBqv1-GuA","",""],
 ["Podcasty i relacje","#FestiwaLOVE Kronika: dzień dziewiąty","Kronika","https://www.youtube.com/watch?v=drmju8W9P3c","",""],
-["YouTube","GPumpkin – spot promocyjny","Spot promocyjny","https://youtu.be/WxLjoFIwGTs","",""],
+["YouTube","GPumpkin – spot promocyjny","Spot promocyjny","https://youtu.be/bL6dYfJO4WQ","https://i.ytimg.com/vi/bL6dYfJO4WQ/hqdefault.jpg",""],
 ["YouTube","Marcello Mastroianni – najpiękniejszy Włoch","Film na YouTube","https://youtu.be/2mIuAcEiD0s?si=Ls8peNR-nMRAeHBF","",""],
 ["YouTube","Bar u sąsiada","Film na YouTube","https://www.youtube.com/watch?v=ksDDSvOcZjw","",""],
 ["YouTube","Bez stresu 2026","Film na YouTube","https://www.youtube.com/watch?v=gBanXSlYEXU","",""],
@@ -285,7 +285,8 @@ else if(e.p=="yt")im=ytThumbHtml(e.id);
 else if(e.p=="vm")im="<img data-vm='"+e.id+"' alt=''>";
 else if(e.p=="mp4")im="<video src='"+esc(e.src)+"#t=0.5' preload='metadata' muted playsinline></video>";
 return "<button type='button' class='tm' data-play aria-label='Odtwórz: "+esc(i.t)+"'>"+im+pl+"</button>"}
-function ytThumbHtml(id){return "<img src='https://i.ytimg.com/vi/"+id+"/maxresdefault.jpg' data-fallback='maxres' alt='' loading='lazy' onerror=\"if(this.dataset.fallback==='maxres'){this.dataset.fallback='sd';this.src='https://i.ytimg.com/vi/"+id+"/sddefault.jpg'}else if(this.dataset.fallback==='sd'){this.dataset.fallback='hq';this.src='https://i.ytimg.com/vi/"+id+"/hqdefault.jpg'}else{this.style.display='none'}\">"}
+function ytThumbHtml(id){const b='https://i.ytimg.com/vi/'+id+'/';return "<img src='"+b+"maxresdefault.jpg' data-fb='0' alt='' loading='lazy' onload=\"if(this.naturalWidth<=120)ytNext(this)\" onerror=\"ytNext(this)\">"}
+function ytNext(im){const L=['sddefault','hqdefault','mqdefault'],n=+im.dataset.fb;if(n>=L.length){im.style.display='none';return}im.dataset.fb=n+1;im.src=im.src.replace(/[a-z]+default\.jpg/,L[n]+'.jpg')}
 function loadVimeoThumbs(root){root.querySelectorAll("img[data-vm]").forEach(im=>{const id=im.dataset.vm;try{fetch("https://vimeo.com/api/oembed.json?url="+encodeURIComponent("https://vimeo.com/"+id)).then(r=>r.json()).then(j=>{if(j&&j.thumbnail_url)im.src=j.thumbnail_url}).catch(()=>{})}catch(x){}})}
 function posterOf(e,th){if(th)return "<img src='"+esc(th)+"' alt=''>";if(e.p=="yt")return ytThumbHtml(e.id);if(e.p=="vm")return "<img data-vm='"+e.id+"' alt=''>";return ""}
 function ico(f,s){return '<svg width="'+s+'" height="'+s+'" viewBox="0 0 32 32" shape-rendering="crispEdges" aria-hidden="true"><path fill="#000" d="M2 6h12l2 3h14v19H2z"/><path fill="'+f.c[0]+'" d="M3 7h10l2 3h14v17H3z"/><path fill="'+f.c[1]+'" d="M3 12h26v15H3z"/><path fill="'+f.c[2]+'" d="M3 12h26v1H3zM3 12h1v15H3z"/><path fill="'+f.c[3]+'" d="M3 26h26v1H3zM28 12h1v15h-1z"/><g transform="translate(-2 0)">'+GLYPHS[f.g]+'</g></svg>'}
